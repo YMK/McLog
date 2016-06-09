@@ -1,0 +1,24 @@
+{
+  "name": "ymklogue",
+  "version": "1.0.0",
+  "description": "A small app for viewing logs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YaManicKill/ymklogue.git"
+  },
+  "author": "YaManicKill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YaManicKill/ymklogue/issues"
+  },
+  "homepage": "https://github.com/YaManicKill/ymklogue#readme",
+  "dependencies": {
+    "consolidate": "^0.14.1",
+    "express": "^4.13.4",
+    "nunjucks": "^2.4.2"
+  }
+}
