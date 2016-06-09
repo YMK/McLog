@@ -34,7 +34,7 @@ app.get('/:server/:chan', function (req, res) {
   	res.render('chanView.html',{
         server: req.params.server,
         chan: req.params.chan,
-        dates: dates
+        dates: dates ? dates.reverse() : []
     });
   });
 });
