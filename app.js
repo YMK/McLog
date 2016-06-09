@@ -55,7 +55,7 @@ app.get('/:server/:chan/:date', function (req, res) {
       res.render('chatView.html', {err: err});
     } else {
     	res.render('chatView.html', {
-        logs: contents ? contents.split("\n").reverse() : [],
+        logs: contents ? contents.split("\n") : [],
         server: server,
         chan: chan,
         date: date
