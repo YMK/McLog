@@ -3,9 +3,10 @@
 
 </head>
 <body>
-	{% for log in logs %}
+	<h1>Servers:</h1>
+	{% for server in servers %}
 		<div>
-			{{log}}
+			<a href="/{{server}}">{{server}}</a>
 		</div>
 	{% endfor %}
 </body>

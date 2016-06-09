@@ -1,0 +1,13 @@
+<html>
+<head>
+
+</head>
+<body>
+	<h1>Dates:</h1>
+	{% for date in dates %}
+		<div>
+			<a href="/{{server}}/{{chan|urlencode()}}/{{date}}">{{date}}</a>
+		</div>
+	{% endfor %}
+</body>
+</html>

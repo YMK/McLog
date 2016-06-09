@@ -13,7 +13,30 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 app.get('/', function (req, res) {
-	res.render('index.html');
+  fs.readdir(path, function (err, servers) {
+  	res.render('index.html',{
+        servers: servers
+    });
+  });
+});
+
+app.get('/:server', function (req, res) {
+  fs.readdir(path + "/" + req.params.server, function (err, chans) {
+  	res.render('serverView.html',{
+        server: req.params.server,
+        chans: chans
+    });
+  });
+});
+
+app.get('/:server/:chan', function (req, res) {
+  fs.readdir(path + "/" + req.params.server + "/" + req.params.chan, function (err, dates) {
+  	res.render('chanView.html',{
+        server: req.params.server,
+        chan: req.params.chan,
+        dates: dates
+    });
+  });
 });
 
 app.get('/:server/:chan/:date', function (req, res) {
@@ -24,12 +47,18 @@ app.get('/:server/:chan/:date', function (req, res) {
   if (!chan.includes("#")) {
     chan = "#" + chan;
   }
-  fs.readFile(path + "/" + server + "/" + chan + "/" + date + ".log", 'utf8', function(err, contents) {
+  if (!date.includes(".log")) {
+    date = date + ".log";
+  }
+  fs.readFile(path + "/" + server + "/" + chan + "/" + date, 'utf8', function(err, contents) {
     if (err) {
-      res.render('index.html', {err: err});
+      res.render('chatView.html', {err: err});
     } else {
-    	res.render('index.html', {
-        logs: contents ? contents.split("\n") : []
+    	res.render('chatView.html', {
+        logs: contents ? contents.split("\n") : [],
+        server: server,
+        chan: chan,
+        date: date
       });
     }
   });

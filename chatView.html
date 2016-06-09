@@ -1,0 +1,14 @@
+<html>
+<head>
+
+</head>
+<body>
+	{{err}}
+	<h1>{{server}} - {{chan}} - {{date}}:</h1>
+	{% for log in logs %}
+		<div>
+			{{log}}
+		</div>
+	{% endfor %}
+</body>
+</html>
