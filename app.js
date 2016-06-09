@@ -39,7 +39,7 @@ app.use(function (req, res) {
   res.sendStatus(404);
 });
 
-var server = app.listen(3000, function () {
+var server = app.listen(3003, function () {
   var port = server.address().port;
   console.log('Server started on port %s', port);
 });
