@@ -6,7 +6,7 @@
 	<h1>Channels:</h1>
 	{% for chan in chans %}
 		<div>
-			<a href="/{{server}}/{{chan|urlencode()}}">{{chan}}</a>
+			<a href="{{server}}/{{chan|urlencode()}}">{{chan}}</a>
 		</div>
 	{% endfor %}
 </body>

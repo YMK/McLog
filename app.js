@@ -1,66 +1,29 @@
 var express = require('express'),
-    app = express()
+    fs = require('fs'),
+    path = require('path'),
+    app = express(),
     consolidate = require('consolidate'),
-    path = process.env['HOME'] + "/logs/yamanickill",
-    fs = require('fs');
+    home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
+    rootPath = path.join(home, "logs", "/yamanickill");
 
 if(process.argv.length > 2) {
-  path = process.argv[2];
+  rootPath = process.argv[2];
 }
+console.log(rootPath);
 
 app.engine('html', consolidate.nunjucks);
 app.set('view engine', 'html');
-app.set('views', __dirname);
+app.set('views', path.join(__dirname, 'src'));
+
+require('./src/server/server')(app, rootPath);
+require('./src/channel/channel')(app, rootPath);
+require('./src/chat/chat')(app, rootPath);
 
 app.get('/', function (req, res) {
-  fs.readdir(path, function (err, servers) {
-  	res.render('index.html',{
+  fs.readdir(rootPath, function (err, servers) {
+  	res.render('../index.html',{
         servers: servers
     });
-  });
-});
-
-app.get('/:server', function (req, res) {
-  fs.readdir(path + "/" + req.params.server, function (err, chans) {
-  	res.render('serverView.html',{
-        server: req.params.server,
-        chans: chans
-    });
-  });
-});
-
-app.get('/:server/:chan', function (req, res) {
-  fs.readdir(path + "/" + req.params.server + "/" + req.params.chan, function (err, dates) {
-  	res.render('chanView.html',{
-        server: req.params.server,
-        chan: req.params.chan,
-        dates: dates ? dates.reverse() : []
-    });
-  });
-});
-
-app.get('/:server/:chan/:date', function (req, res) {
-  var server = req.params.server,
-    chan = req.params.chan,
-    date = req.params.date;
-
-  if (!chan.includes("#")) {
-    chan = "#" + chan;
-  }
-  if (!date.includes(".log")) {
-    date = date + ".log";
-  }
-  fs.readFile(path + "/" + server + "/" + chan + "/" + date, 'utf8', function(err, contents) {
-    if (err) {
-      res.render('chatView.html', {err: err});
-    } else {
-    	res.render('chatView.html', {
-        logs: contents ? contents.split("\n") : [],
-        server: server,
-        chan: chan,
-        date: date
-      });
-    }
   });
 });
 
