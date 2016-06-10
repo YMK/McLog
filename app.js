@@ -3,13 +3,9 @@ var express = require('express'),
     path = require('path'),
     app = express(),
     consolidate = require('consolidate'),
+    config = require('./src/config'),
     home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
-    rootPath = path.join(home, "logs", "/yamanickill");
-
-if(process.argv.length > 2) {
-  rootPath = process.argv[2];
-}
-console.log(rootPath);
+    rootPath = path.join(home, config.rootPath);
 
 app.engine('html', consolidate.nunjucks);
 app.set('view engine', 'html');
@@ -19,19 +15,16 @@ require('./src/server/server')(app, rootPath);
 require('./src/channel/channel')(app, rootPath);
 require('./src/chat/chat')(app, rootPath);
 
+var getPaths = (dir, cb) => fs.readdir(rootPath, cb);
+var renderIndex = (servers, res) => res.render('../index.html', {servers: servers});
+
 app.get('/', function (req, res) {
-  fs.readdir(rootPath, function (err, servers) {
-  	res.render('../index.html',{
-        servers: servers
-    });
-  });
+  getPaths(rootPath, (err, servers) => renderIndex(servers, res));
 });
 
-app.use(function (req, res) {
-  res.sendStatus(404);
-});
+app.use( (req, res) => res.sendStatus(404) );
 
-var server = app.listen(3003, function () {
+var server = app.listen(config.port, () => {
   var port = server.address().port;
-  console.log('Server started on port %s', port);
+  console.log('YMKLogue started on port %s', port);
 });
