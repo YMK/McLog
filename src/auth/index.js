@@ -15,7 +15,7 @@ module.exports = function (app) {
 	}, function (user, done) {
 		var key = config.key;
 		if (!key) {
-			return done(err);
+			return done("No key set.");
 		}
 		return done(null, config.key, 30);
 	}));
