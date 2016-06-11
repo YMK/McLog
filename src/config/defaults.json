@@ -1,7 +1,7 @@
 {
   "port": 4000,
   "rootPath": "/logs/",
-  "allowAnonymous": true,
+  "allowAnonymous": false,
   "filterUsersForAnonymous": true,
   "hideForAnonymous": ["#someChan", "aUser"]
 }
