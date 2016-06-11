@@ -1,13 +1,10 @@
-<html>
-<head>
+{% extends "layout.html" %}
 
-</head>
-<body>
-	<h1>{{server}} - {{chan}}:</h1>
-	{% for date in dates %}
-		<div>
-			<a href="{{chan|urlencode()}}/{{date}}">{{date}}</a>
-		</div>
-	{% endfor %}
-</body>
-</html>
+{% block body %}
+<h1>{{server}} - {{chan}}:</h1>
+{% for date in dates %}
+	<div>
+		<a href="chat?server={{server}}&chan={{chan|urlencode()}}&date={{date}}">{{date}}</a>
+	</div>
+{% endfor %}
+{% endblock %}

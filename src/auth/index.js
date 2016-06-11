@@ -35,8 +35,9 @@ module.exports = function (app) {
 		var key = config.key;
     if (key) {
 			// To stop other users getting the QR, we only show it on the first try
-		  res.render('./auth/setup.html', {
-				errors: req.flash('error')
+		  res.render('./auth/login.html', {
+				errors: req.flash('error'),
+				user: req.user
 			});
     } else {
       var key = utils.randomKey(10);
@@ -46,16 +47,17 @@ module.exports = function (app) {
       var qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
 
       config.setKey(key).then(function () {
-	      res.render('./auth/setup.html', { user: req.user, key: encodedKey, qrImage: qrImage });
+	      res.render('./auth/login.html', { user: req.user, key: encodedKey, qrImage: qrImage, user: req.user});
       });
     }
 	});
 
 	app.get('/login', function(req, res){
-	  res.render('./auth/setup.html', {
-			errors: req.flash('error')
+	  res.render('./auth/login.html', {
+			errors: req.flash('error'),
+			user: req.user
 		});
 	});
 
-	app.post('/login', passport.authenticate('2fa-totp', { failureRedirect: '/login', successRedirect: '/', failureFlash: true}));
+	app.post('/login', passport.authenticate('2fa-totp', { failureRedirect: '/login', successRedirect: './', failureFlash: true}));
 };

@@ -5,16 +5,16 @@ var isChannel = (chan) => chan.includes("#");
 var isHiddenChan = (chan) => config.hideForAnonymous.includes(chan);
 
 module.exports = function (app, rootPath) {
-  app.get('/:server/:chan/:date', function (req, res) {
-    var server = req.params.server,
-      chan = req.params.chan,
-      date = req.params.date;
+  app.get('/chat', function (req, res) {
+    var server = req.query.server,
+      chan = req.query.chan,
+      date = req.query.date;
 
 
     if (!req.user && (
       !config.allowAnonymous ||
-      (config.filterUsersForAnonymous && !isChannel(req.params.chan)) ||
-      isHiddenChan(req.params.chan)
+      (config.filterUsersForAnonymous && !isChannel(chan)) ||
+      isHiddenChan(chan)
     )) {
       res.status(403);
       return res.render('403', {
@@ -27,13 +27,14 @@ module.exports = function (app, rootPath) {
     }
     fs.readFile(rootPath + "/" + server + "/" + chan + "/" + date, 'utf8', function(err, contents) {
       if (err) {
-        res.render('chat/chatView.html', {err: err});
+        res.render('chat/chatView.html', {err: err, user: req.user});
       } else {
       	res.render('chat/chatView.html', {
           logs: contents ? contents.split("\n") : [],
           server: server,
           chan: chan,
-          date: date
+          date: date,
+          user: req.user
         });
       }
     });

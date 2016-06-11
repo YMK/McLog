@@ -16,6 +16,9 @@ app.engine('html', consolidate.nunjucks);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'src'));
 
+app.use(express.static('src', {
+  redirect: false
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,9 +41,9 @@ require('./src/channel/channel')(app, rootPath);
 require('./src/chat/chat')(app, rootPath);
 
 var getPaths = (dir, cb) => fs.readdir(rootPath, cb);
-var renderIndex = (servers, res) => res.render('../index.html', {servers: servers});
+var renderIndex = (servers, user, res) => res.render('../index.html', {servers: servers, user: user});
 
-app.get('/', (req, res) => getPaths(rootPath, (err, servers) => renderIndex(servers, res)));
+app.get('/', (req, res) => getPaths(rootPath, (err, servers) => renderIndex(servers, req.user, res)));
 
 app.use( (req, res) => res.sendStatus(404) );
 

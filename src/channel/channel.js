@@ -5,22 +5,23 @@ var isChannel = (chan) => chan.includes("#");
 var isHiddenChan = (chan) => config.hideForAnonymous.includes(chan);
 
 module.exports = function (app, rootPath) {
-  app.get('/:server/:chan', function (req, res) {
+  app.get('/chan', function (req, res) {
     if (!req.user && (
       !config.allowAnonymous ||
-      (config.filterUsersForAnonymous && !isChannel(req.params.chan)) ||
-      isHiddenChan(req.params.chan)
+      (config.filterUsersForAnonymous && !isChannel(req.query.chan)) ||
+      isHiddenChan(req.query.chan)
     )) {
       res.status(403);
       return res.render('403', {
         error: "Sorry, you can't see this. Try and log in."
       });
     }
-    fs.readdir(rootPath + "/" + req.params.server + "/" + req.params.chan, function (err, dates) {
+    fs.readdir(rootPath + "/" + req.query.server + "/" + req.query.chan, function (err, dates) {
     	res.render('channel/chanView.html',{
-          server: req.params.server,
-          chan: req.params.chan,
-          dates: dates ? dates.reverse() : []
+          server: req.query.server,
+          chan: req.query.chan,
+          dates: dates ? dates.reverse() : [],
+          user: req.user
       });
     });
   });

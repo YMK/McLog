@@ -1,16 +1,13 @@
-<html>
-<head>
+{% extends "layout.html" %}
 
-</head>
-<body>
-	<h1>{{server}}:</h1>
-	{% for chan in chans %}
-		<div>
-			<a href="{{server}}/{{chan|urlencode()}}">{{chan}}</a>
-		</div>
-	{% endfor %}
-	{% if chans == undefined %}
-		No channels on {{server}}
-	{% endif %}
-</body>
-</html>
+{% block body %}
+<h1>{{server}}:</h1>
+{% for chan in chans %}
+	<div>
+		<a href="chan?server={{server}}&chan={{chan|urlencode()}}">{{chan}}</a>
+	</div>
+{% endfor %}
+{% if chans == undefined %}
+	No channels on {{server}}
+{% endif %}
+{% endblock %}
