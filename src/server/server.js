@@ -2,6 +2,7 @@ var fs = require('fs'),
   config = require('../config');
 
 var isChannel = (chan) => chan.includes("#");
+var isHiddenChan = (chan) => config.hideForAnonymous.includes(chan);
 
 module.exports = function (app, rootPath) {
   app.get('/:server', function (req, res) {
@@ -14,8 +15,9 @@ module.exports = function (app, rootPath) {
 
     fs.readdir(rootPath + "/" + req.params.server, function (err, chans) {
       if (!req.user && config.filterUsersForAnonymous) {
-        chans = chans.filter(isChannel)
+        chans = chans.filter(isChannel);
       }
+      chans = chans.filter((chan) => !isHiddenChan(chan));
     	res.render('server/serverView.html',{
           server: req.params.server,
           chans: chans

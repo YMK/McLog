@@ -2,6 +2,7 @@ var fs = require('fs'),
   config = require('../config');
 
 var isChannel = (chan) => chan.includes("#");
+var isHiddenChan = (chan) => config.hideForAnonymous.includes(chan);
 
 module.exports = function (app, rootPath) {
   app.get('/:server/:chan/:date', function (req, res) {
@@ -10,7 +11,11 @@ module.exports = function (app, rootPath) {
       date = req.params.date;
 
 
-    if (!req.user && (!config.allowAnonymous || (config.filterUsersForAnonymous && !isChannel(chan)))) {
+    if (!req.user && (
+      !config.allowAnonymous ||
+      (config.filterUsersForAnonymous && !isChannel(req.params.chan)) ||
+      isHiddenChan(req.params.chan)
+    )) {
       res.status(403);
       return res.render('403', {
         error: "Sorry, you can't see this. Try and log in."
