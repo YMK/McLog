@@ -14,6 +14,7 @@ module.exports = function (app, rootPath) {
     }
 
     fs.readdir(rootPath + "/" + req.params.server, function (err, chans) {
+      chans = chans || [];
       if (!req.user && config.filterUsersForAnonymous) {
         chans = chans.filter(isChannel);
       }
