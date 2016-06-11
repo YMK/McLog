@@ -18,7 +18,9 @@ module.exports = function (app, rootPath) {
       if (!req.user && config.filterUsersForAnonymous) {
         chans = chans.filter(isChannel);
       }
-      chans = chans.filter((chan) => !isHiddenChan(chan));
+      if (!req.users) {
+        chans = chans.filter((chan) => !isHiddenChan(chan));
+      }
     	res.render('server/serverView.html',{
           server: req.params.server,
           chans: chans
