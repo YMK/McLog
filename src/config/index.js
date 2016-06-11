@@ -30,10 +30,10 @@ try {
   });
 }
 
-config = _.merge({}, defaults, config);
+config = _.assign({}, defaults, config);
 saveConfig();
 
-module.exports = _.merge({
+module.exports = _.assign({
   setKey: (key) => {
     return new Promise(function (res, rej) {
       config.key = key;
