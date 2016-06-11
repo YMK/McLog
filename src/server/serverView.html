@@ -3,11 +3,14 @@
 
 </head>
 <body>
-	<h1>Channels:</h1>
+	<h1>{{server}}:</h1>
 	{% for chan in chans %}
 		<div>
 			<a href="{{server}}/{{chan|urlencode()}}">{{chan}}</a>
 		</div>
 	{% endfor %}
+	{% if chans == undefined %}
+		No channels on {{server}}
+	{% endif %}
 </body>
 </html>

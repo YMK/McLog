@@ -18,9 +18,7 @@ require('./src/chat/chat')(app, rootPath);
 var getPaths = (dir, cb) => fs.readdir(rootPath, cb);
 var renderIndex = (servers, res) => res.render('../index.html', {servers: servers});
 
-app.get('/', function (req, res) {
-  getPaths(rootPath, (err, servers) => renderIndex(servers, res));
-});
+app.get('/', (req, res) => getPaths(rootPath, (err, servers) => renderIndex(servers, res)));
 
 app.use( (req, res) => res.sendStatus(404) );
 
