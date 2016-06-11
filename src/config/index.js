@@ -8,6 +8,17 @@ var defaults = require('./defaults.json'),
   configPath = path.join(configDir, "ymklogue.json"),
   config = {};
 
+var errorLogger = (err, res, rej) => {
+  if (err) {
+    console.log(err);
+    reject(rej);
+  } else {
+    resolve(res)
+  }
+}
+var resolve = (res) => res ? res() : undefined;
+var reject = (err, rej) => rej ? rej(err) : err;
+var saveConfig = (res) => fs.writeFile(configPath, JSON.stringify(config, null, 2), { flag: 'w' }, (err) => errorLogger(err, res));
 
 try {
   config = require(configPath);
@@ -15,10 +26,18 @@ try {
   console.log("No config file. Writing with defaults.");
   mkpath(configDir, (err) => {
       errorLogger(err);
-      fs.writeFile(configPath, JSON.stringify(defaults), { flag: 'wx' }, errorLogger);
+      fs.writeFile(configPath, JSON.stringify(defaults, null, 2), { flag: 'wx' }, errorLogger);
   });
 }
 
-var errorLogger = (err) => err ? console.log(err) : err;
+config = _.merge({}, defaults, config);
+saveConfig();
 
-module.exports = _.merge({}, defaults, config);
+module.exports = _.merge({
+  setKey: (key) => {
+    return new Promise(function (res, rej) {
+      config.key = key;
+      saveConfig(res);
+    });
+  }
+}, config);

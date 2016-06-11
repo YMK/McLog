@@ -1,4 +1,6 @@
 {
   "port": 4000,
-  "rootPath": "/logs/"
+  "rootPath": "/logs/",
+  "allowAnonymous": true,
+  "filterUsersForAnonymous": true
 }

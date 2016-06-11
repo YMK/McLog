@@ -1,4 +1,7 @@
-var fs = require('fs');
+var fs = require('fs'),
+  config = require('../config');
+
+var isChannel = (chan) => chan.includes("#");
 
 module.exports = function (app, rootPath) {
   app.get('/:server/:chan/:date', function (req, res) {
@@ -6,9 +9,14 @@ module.exports = function (app, rootPath) {
       chan = req.params.chan,
       date = req.params.date;
 
-    if (!chan.includes("#")) {
-      chan = "#" + chan;
+
+    if (!req.user && (!config.allowAnonymous || (config.filterUsersForAnonymous && !isChannel(chan)))) {
+      res.status(403);
+      return res.render('403', {
+        error: "Sorry, you can't see this. Try and log in."
+      });
     }
+
     if (!date.includes(".log")) {
       date = date + ".log";
     }
