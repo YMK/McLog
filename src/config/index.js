@@ -2,7 +2,6 @@ var defaults = require('./defaults.json'),
   _ = require('lodash'),
   path = require('path'),
   fs = require('fs'),
-  mkpath = require('mkpath'),
   home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
   configDir = path.join(home, ".config"),
   configPath = path.join(configDir, "ymklogue.json"),
@@ -18,22 +17,21 @@ var errorLogger = (err, res, rej) => {
 }
 var resolve = (res) => res ? res() : undefined;
 var reject = (err, rej) => rej ? rej(err) : err;
-var saveConfig = (res) => fs.writeFile(configPath, JSON.stringify(config, null, 2), { flag: 'w' }, (err) => errorLogger(err, res));
+var saveConfig = (res) => {
+  fs.writeFile(configPath, JSON.stringify(config, null, 2), { flag: 'w' }, (err) => errorLogger(err, res));
+  _.assign(exportObject, config);
+}
 
 try {
   config = require(configPath);
 } catch (e) {
   console.log("No config file. Writing with defaults.");
-  mkpath(configDir, (err) => {
-      errorLogger(err);
-      fs.writeFile(configPath, JSON.stringify(defaults, null, 2), { flag: 'wx' }, errorLogger);
-  });
 }
 
 config = _.assign({}, defaults, config);
 saveConfig();
 
-module.exports = _.assign({
+var exportObject = _.assign({
   setKey: (key) => {
     return new Promise(function (res, rej) {
       config.key = key;
@@ -41,3 +39,5 @@ module.exports = _.assign({
     });
   }
 }, config);
+
+module.exports = exportObject;
