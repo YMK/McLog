@@ -55,7 +55,7 @@ var searchFile = function(file, term) {
 
 var inspectFile = function(contents, term) {
   var results = [];
-  if (contents.includes(term)) {
+  if (contents && contents.includes(term)) {
     var lines = contents.split("\n");
     for (var i = 0; i < lines.length; i++) {
       if (lines[i].includes(term)) {
