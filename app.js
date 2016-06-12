@@ -36,6 +36,7 @@ app.use(session({
 app.use(flash());
 
 require('./src/auth')(app);
+require('./src/search')(app, rootPath);
 require('./src/server/server')(app, rootPath);
 require('./src/channel/channel')(app, rootPath);
 require('./src/chat/chat')(app, rootPath);

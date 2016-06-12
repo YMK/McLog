@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Searching for "{{search}}":</h1>
+{% for file in results %}
+	<strong>{{file.name}}:</strong>
+	{% for line in file.lines %}
+		<div>
+			{{line}}
+		</div>
+	{% endfor %}
+{% endfor %}
+{% if results.length == 0 %}
+	No results for "{{search}}"
+{% endif %}
+{% endblock %}

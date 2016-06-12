@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
@@ -26,6 +26,12 @@
 					<li><a href="login">Login</a></li>
 				{% endif %}
 			</ul>
+      <form class="navbar-form navbar-right" role="search" action="search" method="get">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="s">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
 		</div><!-- /.navbar-collapse -->
 	</nav>
 	<div class="container-fluid">

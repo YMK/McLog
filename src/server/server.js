@@ -6,7 +6,6 @@ var isHiddenChan = (chan) => config.hideForAnonymous.includes(chan);
 
 module.exports = function (app, rootPath) {
   app.get('/server', function (req, res) {
-    console.log(req.originalUrl);
     if (!req.user && !config.allowAnonymous) {
       res.status(403);
       return res.render('403', {
