@@ -1,10 +1,4 @@
-# ymklogue
-
-## What's with the name?
-
-Well, I'm YaManicKill (or YMK). Logue is the French for "log", and also a suffix in English (for example dialogue). So, I thought it worked quite well.
-
-Also, It should be said "Why Em Clog". Which I liekd.
+# YaManicLog
 
 ## What is this?
 
@@ -19,15 +13,15 @@ It uses Google Authenticator to authenticate (just as 1fa). It will present you 
 
 Sure:
 
-![Index view](https://github.com/YaManicKill/ymklogue/raw/master/docs/img/root-view.png "Index view")
-![Server view](https://github.com/YaManicKill/ymklogue/raw/master/docs/img/server-view.png "Server view")
-![Channel view](https://github.com/YaManicKill/ymklogue/raw/master/docs/img/chan-view.png "Channel view")
-![Log view](https://github.com/YaManicKill/ymklogue/raw/master/docs/img/log-view.png "Log view")
+![Index view](https://github.com/YaManicKill/YaManicLog/raw/master/docs/img/root-view.png "Index view")
+![Server view](https://github.com/YaManicKill/YaManicLog/raw/master/docs/img/server-view.png "Server view")
+![Channel view](https://github.com/YaManicKill/YaManicLog/raw/master/docs/img/chan-view.png "Channel view")
+![Log view](https://github.com/YaManicKill/YaManicLog/raw/master/docs/img/log-view.png "Log view")
 
 
 ## Installation
 
-* Clone https://github.com/YaManicKill/ymklogue.git
+* Clone https://github.com/YaManicKill/YaManicLog.git
 * npm i
 * npm start
 
@@ -40,7 +34,7 @@ Note that your logs must be stored as "server/chan/day" to work.
 
 ## Config
 
-The config file is created in ~/.config/ymklogue on first run. These are your options:
+The config file is created in ~/.config/YaManicLog on first run. These are your options:
 
 * port (default 4000)
 

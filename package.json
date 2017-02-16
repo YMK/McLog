@@ -1,5 +1,5 @@
 {
-  "name": "ymklogue",
+  "name": "YaManicLog",
   "version": "1.0.0",
   "description": "A small app for viewing logs",
   "main": "app.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YaManicKill/ymklogue.git"
+    "url": "git+https://github.com/YaManicKill/YaManicLog.git"
   },
   "author": "YaManicKill",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YaManicKill/ymklogue/issues"
+    "url": "https://github.com/YaManicKill/YaManicLog/issues"
   },
-  "homepage": "https://github.com/YaManicKill/ymklogue#readme",
+  "homepage": "https://github.com/YaManicKill/YaManicLog#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
     "connect-flash": "^0.1.1",

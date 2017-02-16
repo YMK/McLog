@@ -43,7 +43,7 @@ module.exports = function (app) {
       var key = utils.randomKey(10);
       var encodedKey = base32.encode(key);
 
-      var otpUrl = 'otpauth://totp/' + "YMKLogue" + '?secret=' + encodedKey + '&period=30';
+      var otpUrl = 'otpauth://totp/' + "YaManicLog" + '?secret=' + encodedKey + '&period=30';
       var qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
 
       config.setKey(key).then(function () {

@@ -50,5 +50,5 @@ app.use( (req, res) => res.sendStatus(404) );
 
 var server = app.listen(config.port, () => {
   var port = server.address().port;
-  console.log('YMKLogue started on port %s', port);
+  console.log('YaManicLog started on port %s', port);
 });

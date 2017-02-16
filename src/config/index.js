@@ -4,7 +4,7 @@ var defaults = require('./defaults.json'),
   fs = require('fs'),
   home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
   configDir = path.join(home, ".config"),
-  configPath = path.join(configDir, "ymklogue.json"),
+  configPath = path.join(configDir, "YaManicLog.json"),
   config = {};
 
 var errorLogger = (err, res, rej) => {
